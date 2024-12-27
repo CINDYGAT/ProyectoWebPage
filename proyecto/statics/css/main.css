@@ -1,0 +1,269 @@
+/* Estilo para alinear los elementos del login, carrito y cuadro de búsqueda */
+.d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* O puedes usar justify-content-between o justify-content-around */
+    align-items: center; /* Asegura que estén alineados verticalmente */
+    gap: 15px;
+}
+
+/* Define el color del fondo de la página */
+body {
+    background-color: rgb(210, 210, 243); /* Un color claro, puedes cambiarlo según prefieras */
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para la barra (puedes aplicarlo a una clase o ID específico) */
+.navbar {
+    background-color: #ff5733; /* Color de la barra, como un tono anaranjado para pizza */
+    padding: 10px;
+    color: black;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-number {
+    position: absolute;
+    top: -5px; /* Ajusta según sea necesario */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: red;
+    padding: 3px 7px;
+    font-size: 12px; /* Asegúrate de que el número no sea demasiado grande */
+}
+.cart-icon{
+    width: 25px;
+    height: auto;
+    display: inline-block;
+    margin-left: 15px;
+}
+/* Ajusta el tamaño de la imagen */
+img {
+    width: 15%; /* O usa un valor específico, como 300px */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 5px; /* Opcional: para esquinas redondeadas */
+}
+
+.cart-container{
+    display: inline-block;
+    position: relative;
+}
+
+.cart-number{
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: red;
+    padding: 2px 5px;   
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+}   
+
+/* Cambiar el color del texto de los enlaces de navegación */
+.navbar a {
+    color: black;
+}
+
+.navbar a:hover {
+    color: #ff5733; /* Cambia el color al pasar el ratón por encima */
+}
+
+/* Espaciado entre los productos */
+.row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para las imágenes de los productos */
+.thumbnail {
+    width: 100%; /* Asegura que se ajusten al tamaño de la columna */
+    height: auto; /* Mantén la proporción */
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Caja contenedora del producto */
+.box-element {
+    padding: 7px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Estilo para los botones */
+.add-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.btn-success {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    color: #fff;
+}
+
+/* Estilo para los botones */
+.btn-outline-dark {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+    background-color: black;
+    color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Contenedor de los elementos del carrito */
+.box-element {
+    background-color: #f8f9fa; /* Fondo claro */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado entre elementos */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo para las filas del carrito */
+.cart-row {
+    display: flex; /* Flexbox para alinear elementos horizontalmente */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; /* Línea separadora */
+}
+
+.cart-row:last-child {
+    border-bottom: none; /* Sin borde en la última fila */
+}
+
+/* Imágenes de productos en el carrito */
+.row-image {
+    width: 60px; /* Tamaño de la imagen */
+    height: 60px;
+    border-radius: 5px; /* Bordes redondeados */
+    object-fit: cover; /* Asegura que las imágenes tengan buena proporción */
+}
+
+/* Botones para cambiar la cantidad */
+.quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5px; /* Espaciado entre los botones */
+}
+
+.chg-quantity {
+    width: 20px; /* Tamaño del ícono */
+    height: 20px;
+    cursor: pointer; /* Manito al pasar sobre el botón */
+    transition: transform 0.2s ease; /* Animación al pasar sobre el botón */
+}
+
+.chg-quantity:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+}
+
+/* Tabla de resumen */
+.table {
+    width: 100%;
+    margin-bottom: 15px;
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Línea separadora */
+}
+
+.table th {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.table td {
+    font-size: 1em;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}   
+
+.form-control.error {
+    border-color: red;
+    background-color: #ffe6e6;
+}
+
+.order-summary {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    margin-top: 20px;
+}
+.order-summary h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+.order-summary h5 {
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-weight: normal;
+}
+
+.container-flex {
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos */
+    gap: 20px; /* Espaciado entre las columnas */
+}
+
+.form-section,
+.order-summary {
+    flex: 1; /* Ambos ocupan el mismo ancho */
+}
+
+.order-summary {
+    max-width: 400px; /* Ajusta el ancho del resumen si es necesario */
+}
