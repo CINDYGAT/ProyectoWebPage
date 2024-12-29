@@ -1,6 +1,10 @@
 # ProyectoWebPage
 Pagina web para el negocio Walter's Pizza
 
+Activar entorno virtual (si es necesario)
+source mi_entorno/bin/activate
+
+
 En la terminal
 
 python3 manage.py makemigrations
