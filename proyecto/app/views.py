@@ -1,52 +1,34 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+import datetime
 from .models import *
-from django.http import JsonResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.http import JsonResponse
 import json
+from .utils import cookieCart, cartData, guestOrder
 
 def store(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_items':0, 'get_cart_total':0, 'shipping':False}
-        cartItems = order['get_cart_items']    
+    data = cartData(request)
+    cartItems = data['cartItems']
+
     products = Product.objects.all()
     context = {'products': products, 'cartItems': cartItems}
     return render(request, 'generales/store.html', context)
 
 def cart(request):
-
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_items':0, 'get_cart_total':0, 'shipping':False}
-        cartItems = order['get_cart_items']
-
-    context = {'items':items,'order':order, 'cartItems': cartItems}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    items = data['items']
+    order = data['order']
+        
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'generales/cart.html', context)
 
 def checkout(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    items = data['items']   
+    order = data['order']
 
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_items':0, 'get_cart_total':0, 'shipping':False}
-        cartItems = order['get_cart_items']
-
-    context = {'items':items,'order':order, 'cartItems': cartItems}
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'generales/checkout.html', context)
 
 def updateItem(request):
@@ -62,9 +44,9 @@ def updateItem(request):
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
+        orderItem.quantity += 1
     elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
+        orderItem.quantity -= 1
     
     orderItem.save()
 
@@ -72,34 +54,42 @@ def updateItem(request):
         orderItem.delete()
     return JsonResponse('El producto fue agregado', safe=False)
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def processOrder(request):
+    try:
+        transaction_id = datetime.datetime.now().timestamp()
+        data = json.loads(request.body)
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse('home'))  # Redirige al inicio
+        if request.user.is_authenticated:
+            customer = request.user.customer
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
         else:
-            return render(request, 'generales/login.html', {'error': 'Credenciales inválidas'})
-    return render(request, 'generales/login.html')
+            customer, order = guestOrder(request, data)
 
-def register_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        cpassword = request.POST['cpassword']
-        if password != cpassword:
-            return render(request, 'generales/registro.html', {'error': 'Las contraseñas no coinciden'})
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse('home'))  # Redirige al inicio
-        else:
-            return render(request, 'generales/registro.html', {'error': 'Credenciales inválidas'})
-    return render(request, 'generales/registro.html')
+        total = float(data['form']['total'])
+        order.transaction_id = transaction_id
 
-def inicio(request):
-    return render(request, 'generales/inicio.html')
+        if abs(total - order.get_cart_total) > 0.01:
+            return JsonResponse({'error': 'Total no coincide con el carrito'}, status=400)
+
+        order.complete = True
+        order.save()
+
+        if order.shipping:
+            shipping_data = data.get('shipping', {})
+            ShippingAddress.objects.create(
+                customer=customer,
+                order=order,
+                direccion=shipping_data.get('direccion', ''),
+                ciudad=shipping_data.get('ciudad', ''),
+                departamento=shipping_data.get('departamento', ''),
+                pais=shipping_data.get('pais', ''),
+                zip=shipping_data.get('zip', ''),
+            )
+
+        return JsonResponse('El pago fue procesado', safe=False)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
