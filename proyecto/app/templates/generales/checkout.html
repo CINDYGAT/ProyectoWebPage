@@ -144,7 +144,7 @@
                 alert('Transacción completada');
                 cart ={}
                 document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
-                window.location.href = "{% url 'Tienda' %}"
+                window.location.href = "{% url 'inicio' %}"
             })
         }  
     </script>

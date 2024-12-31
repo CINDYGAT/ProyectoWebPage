@@ -21,10 +21,17 @@
         </div>
         <div class="user-actions">
             <!-- Botones con funciones de JavaScript -->
+            {% if user.is_authenticated %}
+            <span class="welcome-message">Bienvenido/a, {{ user.username }}</span>
+            <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        {% else %}
             <button onclick="goToLogin()">Iniciar Sesión</button>
             <button onclick="goToRegister()">Regístrate</button>
-        </div>
-        
+        {% endif %}
+        </div>        
         
     </header>
 
@@ -55,6 +62,15 @@
             </li>
         </ul>
     </nav>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <section class="promo">
         <h2>Promoción Especial de Navidad</h2>

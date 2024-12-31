@@ -99,3 +99,39 @@ footer {
     padding: 40px;
     margin-top: 10px;
 }
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+ul.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+ul.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+ul.messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+ul.messages li.error {
+    background-color: #ffdddd;
+    color: #d8000c;
+    border: 1px solid #d8000c;
+}
+
+ul.messages li.success {
+    background-color: #ddffdd;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}

@@ -9,10 +9,17 @@
 
 /* Define el color del fondo de la página */
 body {
-    background-color: rgb(210, 210, 243); /* Un color claro, puedes cambiarlo según prefieras */
+    background-color: rgb(238, 189, 124); /* Un color claro, puedes cambiarlo según prefieras */
     font-family: Arial, sans-serif;
 }
-
+.icon {
+    width: 25px; /* Ajusta el tamaño deseado */
+    height: 25px; /* Asegúrate de mantener las proporciones */
+}
+.title .icon {
+    width: 25px; /* Tamaño del logo ajustado */
+    height: 25px; /* Asegúrate de mantener proporciones */
+}
 /* Estilo para la barra (puedes aplicarlo a una clase o ID específico) */
 .navbar {
     background-color: #ff5733; /* Color de la barra, como un tono anaranjado para pizza */
@@ -266,4 +273,16 @@ img {
 
 .order-summary {
     max-width: 400px; /* Ajusta el ancho del resumen si es necesario */
+}
+
+.welcome-message {
+    margin-right: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
