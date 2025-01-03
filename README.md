@@ -23,7 +23,9 @@ migrate: para subir y hacer efectivos los modelos de models.py
 -------------------------------------------------------------------------
 
 Para correr el entorno virtual de Docker
+
 cambiar en settings.py:
+
 'HOST': 'db' # de "localhost" a "db"
 
 En la terminal, dentro de la carpeta del proyecto:
