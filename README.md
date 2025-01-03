@@ -19,6 +19,7 @@ makemigrations: cargar los modelos de models.py
 
 migrate: para subir y hacer efectivos los modelos de models.py
 
+http://127.0.0.1:8000/
 
 -------------------------------------------------------------------------
 
@@ -31,6 +32,8 @@ cambiar en settings.py:
 En la terminal, dentro de la carpeta del proyecto:
 
 docker-compose down 
+
+http://localhost:8000
 
 docker-compose build
 
